@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ "X$1" != "X" ]]; then
+    perl -ne 'if(/((?:[0-9a-fA-F]{2}:?){6})/){print "$1\n"}' $1 |sort |uniq -c|awk 'BEGIN{p=0;f=0}$1!=1{print;f++}$1==1{p++}END{if(f>127){f=127}exit f}'
+    R2=(${PIPESTATUS[@]})
+    #echo "P" ${R2[@]}
+    exit ${R2[-1]}
+else
+    echo -e "Usage:\n\t$0 <mac-file>"
+fi

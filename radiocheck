@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd $HOME/mikrotik
+cat netmesh |while read hop mac macfe ip rest;do
+t=$((echo 'ibase=16';echo $macfe|tr ':' ';')|bc|xargs|tr ' ' '.';);
+uptime="?"
+uptime=$(snmpget $ip .1.3.6.1.2.1.1.3.0|awk -F'\\) ' '{print $NF}')
+snmpwalk $ip .1.3.6.1.4.1.14988.1.1.1.2.1.9.${t}|awk '{print $NF}'|awk '{print "'$ip'",$0/1000000,"'"${uptime}"'"}';
+done
+

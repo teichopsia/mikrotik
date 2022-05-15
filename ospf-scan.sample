@@ -1,0 +1,24 @@
+x.x.x.1  0 instance=backbone router-id=x.x.x.4 address=y.y.6.242  
+x.x.x.1    interface=a-down priority=1 dr-address=y.y.6.1  
+x.x.x.1    backup-dr-address=y.y.6.242 state=\"Full\" state-changes=13  
+x.x.x.1    ls-retransmits=0 ls-requests=0 db-summaries=0 adjacency=1d17h57m10s  
+x.x.x.4  0 instance=backbone router-id=x.x.x.1 address=y.y.6.1  
+x.x.x.4    interface=c-up priority=1 dr-address=y.y.6.1  
+x.x.x.4    backup-dr-address=y.y.6.242 state=\"Full\" state-changes=6  
+x.x.x.4    ls-retransmits=0 ls-requests=0 db-summaries=0 adjacency=1d17h57m10s  
+x.x.x.4  1 instance=backbone router-id=x.x.x.2 address=y.y.8.242  
+x.x.x.4    interface=c-down priority=1 dr-address=y.y.8.1  
+x.x.x.4    backup-dr-address=y.y.8.242 state=\"Full\" state-changes=36  
+x.x.x.4    ls-retransmits=0 ls-requests=0 db-summaries=0 adjacency=1d3h54m10s  
+x.x.x.2  0 instance=backbone router-id=x.x.x.4 address=y.y.8.1 interface=m-up  
+x.x.x.2    priority=1 dr-address=y.y.8.1 backup-dr-address=y.y.8.242  
+x.x.x.2    state=\"Full\" state-changes=9 ls-retransmits=0 ls-requests=0 db-summaries=0  
+x.x.x.2    adjacency=1d3h54m11s  
+x.x.x.2  1 instance=backbone router-id=x.x.x.3 address=y.y.10.242  
+x.x.x.2    interface=m-down priority=1 dr-address=y.y.10.1  
+x.x.x.2    backup-dr-address=y.y.10.242 state=\"Full\" state-changes=7  
+x.x.x.2    ls-retransmits=0 ls-requests=0 db-summaries=0 adjacency=1w1d4h14m55s  
+x.x.x.3  0 instance=barnbone router-id=x.x.x.2 address=y.y.10.1  
+x.x.x.3    interface=t-up priority=1 dr-address=y.y.10.1  
+x.x.x.3    backup-dr-address=y.y.10.242 state=\"Full\" state-changes=6  
+x.x.x.3    ls-retransmits=0 ls-requests=0 db-summaries=0 adjacency=1w1d4h14m53s  

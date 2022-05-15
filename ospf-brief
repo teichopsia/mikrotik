@@ -1,0 +1,4 @@
+#!/bin/bash
+
+jq -r 'paths(scalars) as $p|$p+[getpath($p)]|join(" ")|select(contains("state ")or contains("adjacency "))'
+

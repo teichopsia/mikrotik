@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+
+import sys
+import json
+import re
+
+def main():
+    save={}
+    try:
+        with open(sys.argv[1],'rt') if len(sys.argv)>1 else sys.stdin as t:
+            last=''
+            inst=''
+            for line in t:
+                ip,o=line.split(' ',1)
+                if ip!=last:
+                    _,rest=o.split(' ',1)
+                    tv=rest.split(' ')
+                inst=tv.pop(0) or inst
+                save.setdefault(ip,{}).setdefault(inst,{})
+                for setting in tv:
+                    if '=' in setting:
+                        l,r=setting.split('=',1)
+                        if "\\\"" in r:
+                            r=r.split("\\\"")[1]
+                        if l=='adjacency':
+                            shift={'w':604800,'d':86400,'h':3600,'m':60,'s':1}
+                            bd=list(filter(lambda k:k[1] or None,enumerate(re.split(r'(['+''.join(shift.keys())+'])+',r))))
+                            t=0
+                            for x in range(0,len(bd),2):
+                                t+=int(bd[x][1])*shift[bd[x+1][1]]
+                            r=t
+                        if l in ('priority','state-changes','ls-retransmits','ls-requests','db-summaries'):
+                            r=int(r)
+                        save[ip][inst][l]=r
+    except ():
+        pass
+    finally:
+        print(json.dumps(save))
+    
+if __name__=='__main__':
+    main()
