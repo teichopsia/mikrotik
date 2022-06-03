@@ -1,0 +1,51 @@
+:global meh [:toarray ""]
+/interface wireless registration-table;
+:foreach i in=[find] do={
+	:foreach j in=[get $i strength-at-rates] do={
+		:local k [:pick $j 0 [:find $j " "]];
+		:local t [:totime [:pick $j ([:find $j " "]+1) [:len $j]]];
+		:local l 0;
+		:local r [:find $t ":" $l];
+		:local h [:tonum [:pick $t $l $r]];
+		:set l ($r+1);
+		:set r [:find $t ":" $l];
+		:local m [:tonum [:pick $t $l $r]];
+		:set l ($r+1);
+		:if ([:find $t "." $l]>0) do={:set r [:find $t "." $l]} else={:set r [:len $t]};
+		:local s [:tonum [:pick $t $l $r]];
+		:local c [get $i comment];
+		:if ([:len $c]=0) do={:set c "--"};
+        :local e ((($h)*60+$m)*60+$s);
+
+        #add node for row
+        #:local thus [:len $meh]
+        #:set ($meh->[$thus]) [:toarray ""];
+        #:set ($meh->($thus)->"interface") [get $i interface];
+        #:set ($meh->($thus)->"mac") [get $i mac-address];
+        #:set ($meh->($thus)->"mode") $k;
+        #:set ($meh->($thus)->"client") $c;
+        #:set ($meh->($thus)->"age") $e;
+        #:set ($meh->($thus)->"time") $t;
+		#:put ($k."\t".$c."\t".$t."\t_".$h."\t".$m."\t".$s."\t".$e)
+        :local mac [get $i mac-address];
+        :if ($meh->"$mac") do={} else={
+            :set ($meh->"$mac") [:toarray ""];
+        }
+        :local thus [:len ($meh->$mac)];
+        :set ($meh->"$mac"->[$thus]) [:toarray ""];
+        :set ($meh->"$mac"->($thus)->"interface") [get $i interface];
+        :set ($meh->"$mac"->($thus)->"mac") [get $i mac-address];
+        :set ($meh->"$mac"->($thus)->"mode") $k;
+        :set ($meh->"$mac"->($thus)->"client") $c;
+        :set ($meh->"$mac"->($thus)->"age") $e;
+        :set ($meh->"$mac"->($thus)->"time") $t;
+	}
+}
+:foreach mac in $meh do={
+    #:foreach row in [$KSort ($meh->"$mac") age] do={
+    :foreach row in [$mac] do={
+        :put ($row->"interface"."\t".$row->"mac"."\t".$row->"mode"."\t".$row->"client"."\t".$row->"age")
+    }
+}
+#:set $meh
+
